@@ -1,15 +1,28 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Ingredients</title>
+    <meta charset="UTF-8"/>
+    <title>MyKitchen Home</title>
 </head>
 <body>
-<h1> There should be ingredients </h1>
+<h1>Hello in your kitchen!</h1>
+
 <table>
-    <tr><th>INGREDIENTS</th></tr>
-    <tr><td>Kolumna 1, wiersz 1</td></tr>
-    <tr><td>Kolumna 1, wiersz 2</td></tr>
+    <tr>
+        <th>ID</th>
+        <th>Description</th>
+    </tr>
+    <tr th:each="ingredient : ${ingredients}">
+        <td th:text="${ingredient.id}">123</td>
+        <td th:text="${ingredient.description}">milk</td>
+    </tr>
 </table>
+<div class="col-md-3 form-group">
+    <label>New Ingredient:</label>
+    <label>
+        <input type="text" class="form-control" th:field="*{ingredients}"/>
+    </label>
+</div>
+<button type="submit" class="btn btn-primary">Submit</button>
 </body>
 </html>
