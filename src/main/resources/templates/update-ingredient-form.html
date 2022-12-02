@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ENG">
+<head>
+    <meta charset="UTF-8">
+    <title>Update Ingredient</title>
+</head>
+<body>
+<h3>Edit Ingredient</h3>
+  <br>  <form th:action="@{/ingredients/update/{id}(id=*{id})}"
+              th:object="${editIngredient}" method="post">
+  <table>
+    <tr>
+      <td>Ingredient Id</td>
+      <td><input type="text" disabled="disabled" name="id"
+                 th:field="*{id}"/></td>
+    </tr>
+    <tr>
+      <td>Ingredient Description</td>
+      <td><input type="text" name="description"
+                 th:field="${editIngredient.description}" /></td>
+    </tr>
+<!--    błąd wyskakuje przez editIngredient.description ale bez tego wgl nie załaduje się ten formularz bo nie wyszukuje description-->
+  </table>
+  <input type="submit" value="Submit" />
+</form>
+  <br>
+</body>
+</html>

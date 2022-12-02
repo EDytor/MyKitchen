@@ -6,23 +6,27 @@
 </head>
 <body>
 <h1>Hello in your kitchen!</h1>
-
 <table>
+    <thead>
     <tr>
         <th>ID</th>
         <th>Description</th>
+        <th>Delete</th>
     </tr>
+    </thead>
+    <tbody>
     <tr th:each="ingredient : ${ingredients}">
-        <td th:text="${ingredient.id}">123</td>
+        <td th:text="${ingredient.id}">1</td>
         <td th:text="${ingredient.description}">milk</td>
+        <td><a href="#" th:href="@{/ingredients/update/{id}(id=${ingredient.id})}">Update</a></td>
+        <td><a href="#" th:href="@{/ingredients/delete/{id}(id=${ingredient.id})}">Delete</a></td>
     </tr>
+    </tbody>
 </table>
-<div class="col-md-3 form-group">
-    <label>New Ingredient:</label>
-    <label>
-        <input type="text" class="form-control" th:field="*{ingredients}"/>
-    </label>
-</div>
-<button type="submit" class="btn btn-primary">Submit</button>
+<form th:object="${ingredient}" method="post">
+    <label for="ingredientInput"> New Ingredient:</label>
+        <input id="ingredientInput" type= "text" th:field="*{description}"/>
+        <input type="submit" value= "Add"/>
+</form>
 </body>
 </html>
