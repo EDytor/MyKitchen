@@ -18,7 +18,7 @@
     <tr th:each="ingredient : ${ingredients}">
         <td th:text="${ingredient.id}">1</td>
         <td th:text="${ingredient.description}">milk</td>
-        <td><a href="#" th:href="@{/ingredients/update/{id}(id=${ingredient.id})}">Update</a></td>
+        <td><a href="#" th:href="@{/ingredients/{id}(id=${ingredient.id})}">Update</a></td>
         <td><a href="#" th:href="@{/ingredients/delete/{id}(id=${ingredient.id})}">Delete</a></td>
     </tr>
     </tbody>

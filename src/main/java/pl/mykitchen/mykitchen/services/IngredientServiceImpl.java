@@ -3,29 +3,20 @@ package pl.mykitchen.mykitchen.services;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import pl.mykitchen.mykitchen.commands.IngredientCommand;
-import pl.mykitchen.mykitchen.converters.IngredientCommandToIngredient;
-import pl.mykitchen.mykitchen.converters.IngredientToIngredientCommand;
 import pl.mykitchen.mykitchen.domain.Ingredient;
 import pl.mykitchen.mykitchen.repositories.IngredientRepository;
 
-import org.springframework.transaction.annotation.Transactional;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
+
 @Slf4j
 @Service
 public class IngredientServiceImpl implements IngredientService {
     private final IngredientRepository ingredientRepository;
-    private final IngredientCommandToIngredient ingredientCommandToIngredient;
-    private final IngredientToIngredientCommand ingredientToIngredientCommand;
 
-    public IngredientServiceImpl(IngredientRepository ingredientRepository,
-                                 IngredientToIngredientCommand ingredientToIngredientCommand,
-                                 IngredientCommandToIngredient ingredientCommandToIngredient) {
+    public IngredientServiceImpl(IngredientRepository ingredientRepository) {
         this.ingredientRepository = ingredientRepository;
-        this.ingredientToIngredientCommand = ingredientToIngredientCommand;
-        this.ingredientCommandToIngredient = ingredientCommandToIngredient;
     }
 
     @Override
@@ -48,27 +39,12 @@ public class IngredientServiceImpl implements IngredientService {
     }
 
     @Override
-    @Transactional
-    public IngredientCommand findCommandById(Long l) {
-        return ingredientToIngredientCommand.convert(findById(l));
-    }
-
-    @Override
-    @Transactional
-    public IngredientCommand saveIngredientCommand(IngredientCommand command) {
-        Ingredient detachedIngredient = ingredientCommandToIngredient.convert(command);
-
-        Ingredient savedRecipe = ingredientRepository.save(detachedIngredient);
-        log.debug("Saved RecipeId:" + savedRecipe.getId());
-        return ingredientToIngredientCommand.convert(savedRecipe);
-    }
-
-    @Override
     public void deleteById(Long idToDelete) {
         ingredientRepository.deleteById(idToDelete);
     }
-    @Override
-    public void addIngredient() {
 
+    @Override
+    public void addIngredient(Ingredient ingredient) {
+        ingredientRepository.save(ingredient);
     }
 }
