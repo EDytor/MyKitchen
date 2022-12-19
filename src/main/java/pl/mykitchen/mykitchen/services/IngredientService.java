@@ -7,7 +7,8 @@ import java.util.Set;
 
 public interface IngredientService {
     Set<Ingredient> getIngredients();
-    Ingredient findById(Long l);
-    void deleteById(Long idToDelete);
-    void addIngredient(Ingredient ingredient);
+    Ingredient findById(Long id);
+    Ingredient deleteById(Long id);
+    Ingredient addIngredient(Ingredient ingredient);
+    void updateIngredient(Long id, Ingredient ingredient);
 }

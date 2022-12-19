@@ -1,55 +1,40 @@
 package pl.mykitchen.mykitchen.contollers;
 
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.ui.Model;
-import pl.mykitchen.mykitchen.domain.Ingredient;
-import pl.mykitchen.mykitchen.repositories.IngredientRepository;
 
-@Slf4j
-@Controller
+import pl.mykitchen.mykitchen.domain.Ingredient;
+import pl.mykitchen.mykitchen.services.IngredientServiceImpl;
+
+import java.util.Set;
+
+@RestController
 @RequestMapping("/ingredients")
 public class IngredientController {
-    private final IngredientRepository ingredientRepository;
+    private final IngredientServiceImpl ingredientService;
 
-    public IngredientController(IngredientRepository ingredientRepository) {
-        this.ingredientRepository = ingredientRepository;
+    public IngredientController(IngredientServiceImpl ingredientService) {
+        this.ingredientService = ingredientService;
     }
 
     @GetMapping()
-    public String getIngredients(Model model) {
-        model.addAttribute(new Ingredient());
-        model.addAttribute("ingredients", ingredientRepository.findAll());
-        return "ingredients";
+    public Set<Ingredient> getIngredients() {
+        new Ingredient();
+        return ingredientService.getIngredients();
     }
 
     @PostMapping()
-    public String addIngredient(Ingredient ingredient) {
-        ingredientRepository.save(ingredient);
-        return "redirect:/ingredients";
+    public Ingredient addIngredient(Ingredient ingredient) {
+        return ingredientService.addIngredient(ingredient);
     }
 
-    @GetMapping()
-    @RequestMapping("/delete/{id}")
-    public String deleteIngredient(@PathVariable String id) {
-        ingredientRepository.deleteById(Long.valueOf(id));
-        return "redirect:/ingredients";
+    @DeleteMapping("/{id}")
+    public Ingredient deleteIngredient(@PathVariable("id") String id) {
+        return ingredientService.deleteById(Long.valueOf(id));
     }
 
-    @GetMapping()
-    @RequestMapping("/{id}")
-    public String viewForm(Model model, @PathVariable Long id) {
-        Ingredient ingredient = ingredientRepository.findById(id).get();
-        model.addAttribute("ingredient", ingredient);
-        return "update-ingredient-form";
+    @PutMapping("/{id}")
+    public Ingredient updateIngredient(@PathVariable("id") Long id, @RequestBody Ingredient ingredient) {
+        ingredientService.updateIngredient(id, ingredient);
+        return ingredient;
     }
-
-    @PostMapping()
-    @RequestMapping("/save")
-    public String updateIngredient(@ModelAttribute("ingredient") Ingredient ingredient) {
-        ingredientRepository.save(ingredient);
-        return "redirect:/ingredients";
-    }
-
 }
