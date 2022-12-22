@@ -1,20 +1,25 @@
 package pl.mykitchen.mykitchen.domain;
 
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
 import javax.persistence.*;
-import java.math.BigDecimal;
+import java.util.Set;
+
+
 
 @Entity
-public class Ingredient {
+public class Category {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String description;
-    private BigDecimal amount;
+    @ManyToMany(mappedBy = "categories")
+    private Set<Recipe> recipes;
 
-    @OneToOne(fetch = FetchType.EAGER)
-    private UnitOfMeasure uom;
-
-    public Ingredient() {}
+    public Category() {
+    }
 
     public Long getId() {
         return id;
@@ -32,4 +37,11 @@ public class Ingredient {
         this.description = description;
     }
 
+    public Set<Recipe> getRecipes() {
+        return recipes;
+    }
+
+    public void setRecipes(Set<Recipe> recipes) {
+        this.recipes = recipes;
+    }
 }

@@ -18,7 +18,6 @@ public class IngredientController {
 
     @GetMapping()
     public Set<Ingredient> getIngredients() {
-        new Ingredient();
         return ingredientService.getIngredients();
     }
 
