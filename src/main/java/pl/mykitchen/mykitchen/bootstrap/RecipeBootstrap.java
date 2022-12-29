@@ -2,42 +2,51 @@ package pl.mykitchen.mykitchen.bootstrap;
 
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
+import org.springframework.stereotype.Component;
+import pl.mykitchen.mykitchen.domain.Category;
 import pl.mykitchen.mykitchen.domain.Difficulty;
-import pl.mykitchen.mykitchen.domain.Ingredient;
 import pl.mykitchen.mykitchen.domain.Recipe;
-import pl.mykitchen.mykitchen.repositories.IngredientRepository;
 import pl.mykitchen.mykitchen.repositories.RecipeRepository;
 
-public class RecipeBootstrap  implements ApplicationListener<ContextRefreshedEvent> {
+import javax.transaction.Transactional;
+import java.util.Set;
+
+@Component
+public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEvent> {
 
     RecipeRepository recipeRepository;
+    Set<Category> categories = null;
 
     public RecipeBootstrap(RecipeRepository recipeRepository) {
         this.recipeRepository = recipeRepository;
     }
 
     @Override
+    @Transactional
     public void onApplicationEvent(ContextRefreshedEvent event) {
         Recipe recipe1 = new Recipe();
-        recipe1.setDescription("Pierniczki");
-        recipe1.setPreparation("Mąkę przesiać na stolnicę, wlać rozpuszczony gorący miód i wymieszać (najlepiej nożem).\n" +
-                "Ciągle siekając, dodawać kolejno cukier, sodę, kakao i przyprawy, a następnie masło i jedno jajko.\n" +
-                "Dolewać stopniowo (po 1 łyżce) podgrzanego mleka i łączyć składniki ciasta w jednolitą, miękką kulę\n" +
-                "(dolewamy tyle mleka aby ciasto łatwo się wyrabiało i było plastyczne, można nie wykorzystać całego mleka albo dodać troszkę więcej).\n" +
-                "Następnie wyrabiać ręką przez około 10 minut.\n" +
-                "Na posypanej mąką stolnicy rozwałkować ciasto na placek o grubości ok. 1/2 cm. Foremkami wykrajać pierniczki. Układać na blasze wyłożonej papierem do pieczenia w odstępach około 2 cm od siebie.\n" +
-                "Wierzch posmarować roztrzepanym jajkiem (niekoniecznie jeśli pierniczki będziemy dekorować) i piec w piekarniku nagrzanym do 180 stopni (góra i dół bez termoobiegu) przez ok. 10 minut.\n" +
-                "WSKAZÓWKI\n" +
-                "Grubość pierników i czas pieczenia wpływa na to czy pierniki będą po upieczeniu bardziej miękkie czy twarde.\n" +
-                " Zazwyczaj jednak twardnieją po upieczeniu, co jest zjawiskiem naturalnym.\n" +
-                "Pierniki po leżakowaniu np. w puszce czy pojemniku odpowiednio dojrzewają i miękną. Można je dekorować w dowolnym czasie (po upieczeniu czy po leżakowaniu).\n" +
-                "Z tego przepisu można też otrzymać cienkie i chrupiące pierniki, w zależności od naszych potrzeb.\n" +
-                "Ciasto możemy zagnieść z wyprzedzeniem i przechowywać w lodówce.");
+        recipe1.setDescription("Gingerbread cookies");
+        recipe1.setPreparation("""
+                Sift the flour onto the pastry board, pour the melted hot honey and mix (preferably with a knife).
+                While still chopping, add the sugar, baking soda, cocoa and spices one by one, then the butter and one egg.
+                Slowly pour in the heated milk (1 tablespoon at a time) and combine the dough ingredients into a uniform, soft ball
+                (Add enough milk to make the dough easy to knead and plastic, you can not use all the milk or add a little more).
+                Then knead by hand for about 10 minutes.
+                On a floured board, roll out the dough into a cake, about 1/2 cm thick. Cut out the gingerbread with cookie cutters.
+                Place on a baking tray lined with baking paper, spaced about 2 cm apart.
+                Smear the top with a beaten egg (not necessarily if we are going to decorate gingerbread cookies) and bake in an oven preheated to 180 degrees
+                (top and bottom without convection) for about 10 minutes.
+                TIPS
+                The thickness of the gingerbread and the baking time affect whether the gingerbread will be softer or firmer after baking.
+                 However, they usually harden after baking, which is a natural phenomenon.
+                Gingerbread after aging, e.g. in a can or container, matures and softens accordingly. They can be decorated at any time (after baking or after aging).
+                This recipe can also be used to make thin and crispy gingerbread, depending on your needs.
+                The dough can be kneaded in advance and stored in the fridge.""");
         recipe1.setPrepTime(20);
         recipe1.setCookTime(10);
         recipe1.setServings(30);
-        recipe1.setDifficulty(Difficulty.ŁATWE);
-
+        recipe1.setDifficulty(Difficulty.MEDIUM);
+        recipe1.setCategories(categories);
         recipeRepository.save(recipe1);
     }
-    }
+}

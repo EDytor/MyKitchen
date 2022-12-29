@@ -6,6 +6,8 @@ import org.springframework.stereotype.Component;
 import pl.mykitchen.mykitchen.domain.Ingredient;
 import pl.mykitchen.mykitchen.repositories.IngredientRepository;
 
+import javax.transaction.Transactional;
+
 
 @Component
 public class IngredientBootstrap implements ApplicationListener<ContextRefreshedEvent> {
@@ -17,6 +19,7 @@ public class IngredientBootstrap implements ApplicationListener<ContextRefreshed
     }
 
     @Override
+    @Transactional
     public void onApplicationEvent(ContextRefreshedEvent event) {
         Ingredient milk = new Ingredient();
         milk.setDescription("milk");

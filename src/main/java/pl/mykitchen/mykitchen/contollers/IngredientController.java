@@ -1,12 +1,10 @@
 package pl.mykitchen.mykitchen.contollers;
 
 import org.springframework.web.bind.annotation.*;
-
 import pl.mykitchen.mykitchen.domain.Ingredient;
 import pl.mykitchen.mykitchen.services.IngredientServiceImpl;
 
 import java.util.Set;
-
 @RestController
 @RequestMapping("/ingredients")
 public class IngredientController {

@@ -16,28 +16,12 @@ public class UnitOfMeasureBootstrap implements ApplicationListener<ContextRefres
     @Override
     public void onApplicationEvent(ContextRefreshedEvent event) {
         UnitOfMeasure glass1 = new UnitOfMeasure();
-        glass1.setDescription("szklanka");
+        glass1.setDescription("glass");
         unitOfMeasureRepository.save(glass1);
 
-        UnitOfMeasure glass2 = new UnitOfMeasure();
-        glass2.setDescription("szklanki");
-        unitOfMeasureRepository.save(glass2);
-
-        UnitOfMeasure glass3 = new UnitOfMeasure();
-        glass3.setDescription("szklanek");
-        unitOfMeasureRepository.save(glass3);
-
         UnitOfMeasure spoon1 = new UnitOfMeasure();
-        spoon1.setDescription("łyżka");
+        spoon1.setDescription("spoon");
         unitOfMeasureRepository.save(spoon1);
-
-        UnitOfMeasure spoon2 = new UnitOfMeasure();
-        spoon2.setDescription("łyżek");
-        unitOfMeasureRepository.save(spoon2);
-
-        UnitOfMeasure spoon3 = new UnitOfMeasure();
-        spoon3.setDescription("łyżki");
-        unitOfMeasureRepository.save(spoon3);
 
         UnitOfMeasure gram = new UnitOfMeasure();
         gram.setDescription("gram");

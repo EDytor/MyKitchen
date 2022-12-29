@@ -19,19 +19,19 @@ public class CategoryBootstrap implements ApplicationListener<ContextRefreshedEv
     @Override
     public void onApplicationEvent(ContextRefreshedEvent event) {
         Category category1 = new Category();
-        category1.setDescription("Wegetariańskie");
+        category1.setDescription("vegetarian");
         categoryRepository.save(category1);
 
         Category category2 = new Category();
-        category2.setDescription("Mięsne");
+        category2.setDescription("meat");
         categoryRepository.save(category2);
 
         Category category3 = new Category();
-        category3.setDescription("Deser");
+        category3.setDescription("desserts");
         categoryRepository.save(category3);
 
         Category category = new Category();
-        category.setDescription("Makarony");
+        category.setDescription("pasta");
         categoryRepository.save(category);
 
 
