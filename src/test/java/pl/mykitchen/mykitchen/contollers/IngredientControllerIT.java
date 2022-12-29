@@ -24,7 +24,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-public class IngredientControllerTest {
+public class IngredientControllerIT {
 
     @Autowired
     MockMvc mockMvc;

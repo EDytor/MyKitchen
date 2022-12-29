@@ -1,17 +1,18 @@
 package pl.mykitchen.mykitchen.domain;
 
 import org.junit.Before;
+import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
 
 import java.util.HashSet;
 import java.util.Set;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.assertTrue;
 
-class RecipeTest {
+public class RecipeTest {
     Recipe recipe;
+    Set<Ingredient> newIngredients;
 
     @Before
     public void setUp() {
@@ -19,74 +20,86 @@ class RecipeTest {
     }
 
     @Test
-    void setIngredients() {
+    public void shouldSetIngredients() {
+        // Given
+        newIngredients = new HashSet<>();
+        Ingredient milk = new Ingredient();
+        milk.setDescription("milk");
+        Ingredient bread = new Ingredient();
+        bread.setDescription("bread");
+        // When
+        newIngredients.add(milk);
+        newIngredients.add(bread);
+        // Then
+        recipe.setIngredients(newIngredients);
+        assertEquals(2, recipe.getIngredients().size());
     }
 
     @Test
-    void getId() {
+    public void shouldGetId() {
         // Given
         Long id = 2L;
         // When
         recipe.setId(id);
         // Then
-        Assertions.assertEquals(id, recipe.getId());
+        assertEquals(id, recipe.getId());
     }
 
     @Test
-    void setId() {
+    public void shouldSetId() {
         // Given
         Long id = 2L;
         // When
         recipe.setId(3L);
         recipe.setId(id);
         // Then
-        Assertions.assertEquals(id, recipe.getId());
+        assertEquals(id, recipe.getId());
     }
 
     @Test
-    void getPreparation() {
+    public void shouldGetPreparation() {
         // Given
         String preparation = "Add two spoons of sugar";
         // When
         recipe.setPreparation(preparation);
         // Then
-        Assertions.assertEquals("Add two spoons of sugar", recipe.getPreparation());
+        assertEquals("Add two spoons of sugar", recipe.getPreparation());
     }
 
     @Test
-    void setPreparation() {
+    public void shouldSetPreparation() {
         // Given
         String preparation = "Add two spoons of sugar";
         // When
         recipe.setPreparation(preparation);
         recipe.setPreparation("Add three spoons of sugar");
         // Then
-        Assertions.assertEquals("Add three spoons of sugar", recipe.getPreparation());
+        assertEquals("Add three spoons of sugar", recipe.getPreparation());
     }
 
     @Test
-    void getDescription() {
+    public void shouldGetDescription() {
         // Given
         String description = "Pancakes with honey";
         // When
         recipe.setDescription(description);
         // Then
-        Assertions.assertEquals("Pancakes with honey", recipe.getDescription());
+        assertEquals("Pancakes with honey", recipe.getDescription());
     }
 
     @Test
-    void setDescription() {
+    public void shouldSetDescription() {
         // Given
         String description = "Pancakes with honey";
         // When
         recipe.setDescription(description);
         recipe.setDescription("Pancakes with blueberries");
         // Then
-        Assertions.assertEquals("Pancakes with blueberries", recipe.getDescription());
+        assertEquals("Pancakes with blueberries", recipe.getDescription());
     }
 
     @Test
-    void getPrepTime() {
+    public void shouldGetPrepTime() {
         // Given
         Integer prepTime = 5;
         // When
@@ -96,7 +109,7 @@ class RecipeTest {
     }
 
     @Test
-    void setPrepTime() {
+    public void shouldSetPrepTime() {
         // Given
         Integer prepTime = 5;
         // When
@@ -107,7 +120,7 @@ class RecipeTest {
     }
 
     @Test
-    void getCookTime() {
+    public void shouldGetCookTime() {
         // Given
         Integer cookTime = 5;
         // When
@@ -118,7 +131,7 @@ class RecipeTest {
     }
 
     @Test
-    void setCookTime() {
+    public void shouldSetCookTime() {
         // Given
         Integer cookTime = 5;
         // When
@@ -129,7 +142,7 @@ class RecipeTest {
     }
 
     @Test
-    void getServings() {
+    public void shouldGetServings() {
         // Given
         Integer servings = 2;
         // When
@@ -139,7 +152,7 @@ class RecipeTest {
     }
 
     @Test
-    void setServings() {
+    public void shouldSetServings() {
         // Given
         Integer servings = 2;
         // When
@@ -150,33 +163,57 @@ class RecipeTest {
     }
 
     @Test
-    void getIngredients() {
+    public void shouldGetIngredients() {
+        // Given
+        Set<Ingredient> testIngredients = new HashSet<>();
+        Ingredient milk = new Ingredient();
+        milk.setDescription("milk");
+        // When
+        testIngredients.add(milk);
+        recipe.setIngredients(testIngredients);
+        // Then
+        assertTrue(recipe.getIngredients().contains(milk));
 
     }
 
     @Test
-    void getDifficulty() {
+    public void shouldGetDifficulty() {
         // Given
         // When
-        recipe.setDifficulty(Difficulty.ŁATWE);
+        recipe.setDifficulty(Difficulty.EASY);
         // Then
-        Assertions.assertEquals(Difficulty.ŁATWE, recipe.getDifficulty());
+        assertEquals(Difficulty.EASY, recipe.getDifficulty());
     }
 
     @Test
-    void setDifficulty() {
+    public void shouldSetDifficulty() {
         // Given
         // When
-        recipe.setDifficulty(Difficulty.ŁATWE);
-        recipe.setDifficulty(Difficulty.TRUDNE);
+        recipe.setDifficulty(Difficulty.EASY);
+        recipe.setDifficulty(Difficulty.HARD);
         // Then
-        Assertions.assertEquals(Difficulty.TRUDNE, recipe.getDifficulty());
+        assertEquals(Difficulty.HARD, recipe.getDifficulty());
     }
 
     @Test
-    void getCategories() {
+    public void shouldGetCategories() {
         // Given
+        Set<Category> testCategories = new HashSet<>();
+        Category dessert = new Category();
         // When
+        testCategories.add(dessert);
+        recipe.setCategories(testCategories);
         // Then
+        assertEquals(1, recipe.getCategories().size());
+    }
+
+    @Test
+    public void shouldAddIngredient() {
+        // Given
+        Ingredient ingredient = new Ingredient();
+        // When
+        recipe.addIngredient(ingredient);
+        // Then
+        assertTrue(recipe.getIngredients().contains(ingredient));
     }
 }
