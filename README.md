@@ -18,9 +18,9 @@ how to use basic annotations in Spring, how to create a basic page view in HTML 
 Project is created with:
 * Java
 * JUnit5
-* Spring
+* Spring Framework
 * HTML, CSS
-* Mockito, MockMvc
+* Mockito
 
 ## Basic and sample web page
 
