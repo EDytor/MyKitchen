@@ -1,57 +1,37 @@
 package pl.mykitchen.mykitchen.contollers;
 
-import org.springframework.data.jpa.repository.Modifying;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.ui.Model;
 import pl.mykitchen.mykitchen.domain.Ingredient;
-import pl.mykitchen.mykitchen.repositories.IngredientRepository;
+import pl.mykitchen.mykitchen.services.IngredientServiceImpl;
 
-@Slf4j
-@Controller
+import java.util.Set;
+@RestController
 @RequestMapping("/ingredients")
 public class IngredientController {
-    private final IngredientRepository ingredientRepository;
+    private final IngredientServiceImpl ingredientService;
 
-    public IngredientController(IngredientRepository ingredientRepository) {
-        this.ingredientRepository = ingredientRepository;
+    public IngredientController(IngredientServiceImpl ingredientService) {
+        this.ingredientService = ingredientService;
     }
 
     @GetMapping()
-    public String getIngredients(Model model) {
-        model.addAttribute(new Ingredient());
-        model.addAttribute("ingredients", ingredientRepository.findAll());
-        return "ingredients";
+    public Set<Ingredient> getIngredients() {
+        return ingredientService.getIngredients();
     }
 
     @PostMapping()
-    @RequestMapping("/addIngredient")
-    public String addIngredient(Ingredient ingredient) {
-        ingredientRepository.save(ingredient);
-        return "redirect:/ingredients";
+    public Ingredient addIngredient(Ingredient ingredient) {
+        return ingredientService.addIngredient(ingredient);
     }
 
-    @GetMapping()
-    @RequestMapping("/delete/{id}")
-    public String deleteIngredient(@PathVariable String id) {
-        log.debug("Deleting id: " + id);
-        ingredientRepository.deleteById(Long.valueOf(id));
-        return "redirect:/ingredients";
+    @DeleteMapping("/{id}")
+    public Ingredient deleteIngredient(@PathVariable("id") String id) {
+        return ingredientService.deleteById(Long.valueOf(id));
     }
 
-    @GetMapping("/update/{id}")
-    public String getAllEmployees(Model model, @PathVariable("id") Long id, Ingredient ingredient) {
-        model.addAttribute("editIngredient", ingredientRepository.findById(id).get());
-        return "update-ingredient-form";
-    }
-
-    @PostMapping("/update/{id}")
-    public String updateEmployee(@ModelAttribute("editIngredient") Ingredient ingredient, @PathVariable("id") Long ingredientId,
-                                 Model model) {
-        ingredientRepository.save(ingredient).setId(ingredientId);
-        model.addAttribute("ingredients", ingredientRepository.findAll());
-        return "ingredients";
+    @PutMapping("/{id}")
+    public Ingredient updateIngredient(@PathVariable("id") Long id, @RequestBody Ingredient ingredient) {
+        ingredientService.updateIngredient(id, ingredient);
+        return ingredient;
     }
 }

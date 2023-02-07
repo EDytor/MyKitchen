@@ -3,72 +3,61 @@ package pl.mykitchen.mykitchen.services;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import pl.mykitchen.mykitchen.commands.IngredientCommand;
-import pl.mykitchen.mykitchen.converters.IngredientCommandToIngredient;
-import pl.mykitchen.mykitchen.converters.IngredientToIngredientCommand;
 import pl.mykitchen.mykitchen.domain.Ingredient;
 import pl.mykitchen.mykitchen.repositories.IngredientRepository;
 
-import org.springframework.transaction.annotation.Transactional;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
+
 @Slf4j
 @Service
 public class IngredientServiceImpl implements IngredientService {
     private final IngredientRepository ingredientRepository;
-    private final IngredientCommandToIngredient ingredientCommandToIngredient;
-    private final IngredientToIngredientCommand ingredientToIngredientCommand;
 
-    public IngredientServiceImpl(IngredientRepository ingredientRepository,
-                                 IngredientToIngredientCommand ingredientToIngredientCommand,
-                                 IngredientCommandToIngredient ingredientCommandToIngredient) {
+    public IngredientServiceImpl(IngredientRepository ingredientRepository) {
         this.ingredientRepository = ingredientRepository;
-        this.ingredientToIngredientCommand = ingredientToIngredientCommand;
-        this.ingredientCommandToIngredient = ingredientCommandToIngredient;
     }
 
     @Override
     public Set<Ingredient> getIngredients() {
-        log.debug("I'm in the service");
         Set<Ingredient> ingredientSet = new HashSet<>();
         ingredientRepository.findAll().iterator().forEachRemaining(ingredientSet::add);
         return ingredientSet;
     }
 
     @Override
-    public Ingredient findById(Long l) {
-        Optional<Ingredient> ingredientOptional = ingredientRepository.findById(l);
+    public Ingredient findById(Long id) {
+        Optional<Ingredient> ingredientOptional = ingredientRepository.findById(id);
 
         if (ingredientOptional.isEmpty()) {
-            throw new RuntimeException("Ingredient Not Found!");
+            throw new RuntimeException("Ingredient not found!");
         }
 
         return ingredientOptional.get();
     }
 
     @Override
-    @Transactional
-    public IngredientCommand findCommandById(Long l) {
-        return ingredientToIngredientCommand.convert(findById(l));
+    public Ingredient deleteById(Long id) {
+        Ingredient ingredient = findById(id);
+        ingredientRepository.deleteById(id);
+        return ingredient;
     }
 
     @Override
-    @Transactional
-    public IngredientCommand saveIngredientCommand(IngredientCommand command) {
-        Ingredient detachedIngredient = ingredientCommandToIngredient.convert(command);
-
-        Ingredient savedRecipe = ingredientRepository.save(detachedIngredient);
-        log.debug("Saved RecipeId:" + savedRecipe.getId());
-        return ingredientToIngredientCommand.convert(savedRecipe);
-    }
-
-    @Override
-    public void deleteById(Long idToDelete) {
-        ingredientRepository.deleteById(idToDelete);
+    public Ingredient addIngredient(Ingredient ingredient) {
+        ingredientRepository.save(ingredient);
+        return ingredient;
     }
     @Override
-    public void addIngredient() {
+    public void updateIngredient(Long id, Ingredient ingredient){
+        Optional<Ingredient> editIngredient = ingredientRepository.findById(id);
 
+        if (editIngredient.isEmpty()) {
+            throw new RuntimeException("Ingredient not found!");
+        } else {
+            editIngredient.get().setDescription(ingredient.getDescription());
+            ingredientRepository.save(editIngredient.get());
+        }
     }
 }

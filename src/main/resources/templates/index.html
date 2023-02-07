@@ -1,10 +1,66 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head>
     <meta charset="UTF-8"/>
     <title>MyKitchen Home</title>
+    <link rel="stylesheet" href="../static/style.css">
 </head>
 <body>
-<h1>Hello in your kitchen!</h1>
+<div class="main">
+    <nav>
+    <div class="navbar">
+        <div class="icon">
+            <h2 class="logo">MyKitchen</h2>
+        </div>
+        <div class="menu">
+            <ul>
+                <li><a href="#">CATEGORIES</a></li>
+                <li><a href="/ingredients">INGREDIENTS</a></li>
+                <li><a href="#">SHOPPING LIST</a></li>
+                <li><a href="#">FAVORITE</a></li>
+            </ul>
+        </div>
+        <div class="search">
+            <label>
+                <input class="srch" type="search" name="" placeholder="Type To text">
+            </label>
+            <a href="#"> <button class="btn">Search</button></a>
+        </div>
+    </div>
+    </nav>
+    <div class="content">
+        <h1>Hello!<br><span>What are we cooking</span> <br>today?</h1>
+        <p class="par">Search for recipes by categories or ingredients.
+            <br> Save your favorite recipes.
+            <br> Create a shopping list.
+            <br> Add more recipes!</p>
+
+        <button class="cn"><a href="#">ADD RECIPE</a></button>
+
+        <div class="form">
+            <h2>Login Here!</h2>
+            <label>
+                <input type="email" name="email" placeholder="Enter Email Here">
+            </label>
+            <label>
+                <input type="password" name="" placeholder="Enter Password Here">
+            </label>
+            <button class="btnn"><a href="#">Login</a></button>
+
+            <p class="link">Don't have an account<br>
+                <a href="#">Sign up </a> here</p>
+            <p class="liw">Log in with</p>
+
+            <div class="icons">
+                <a href="#"><ion-icon name="logo-facebook"></ion-icon></a>
+                <a href="#"><ion-icon name="logo-instagram"></ion-icon></a>
+                <a href="#"><ion-icon name="logo-twitter"></ion-icon></a>
+                <a href="#"><ion-icon name="logo-google"></ion-icon></a>
+                <a href="#"><ion-icon name="logo-skype"></ion-icon></a>
+            </div>
+
+        </div>
+    </div>
+</div>
 </body>
 </html>
